@@ -1,6 +1,4 @@
-# Project 4 Rubric
-
-/ 30
+# Project 4
 
 ## Repo contents ( / 4)
 
@@ -10,12 +8,57 @@
 - `Dockerfile`
 - GitHub action `yml` file in `.github/workflows`
 
-## Part 1 - Docker-ize it ( / 11)
+## Part 1 - Docker-ize it
 
-- CI Project Overview
-  - (what are you doing, why, what tools)
-- Containerizing your Application:
-  - how to install docker + dependencies on your system's OS (or an EC2 instance)
+### CI Project Overview
+
+#### What are we doing?
+
+We are containerizing an Angular web application using Docker for ease of deployment and scalability.
+
+#### Why are we doing it?
+
+ - Ensures consistent application behavior across environments.
+
+ - Simplifies deployment and testing.
+
+ - Enables efficient versioning and distribution via DockerHub.
+
+#### Tools Used:
+
+ - Docker: Containerization platform.
+
+ - DockerHub: Cloud-based container image repository.
+
+ - Angular: Frontend framework.
+
+ - Node.js & npm: Required for building the Angular application.
+
+ - EC2 (optional): Hosting environment.
+
+### Containerizing your Application:
+
+#### How to install docker + dependencies on MACOS
+
+1. Open the [Docker Desktop](https://docs.docker.com/desktop/) link.
+2. Once inside scroll to the bottom of the page, you should see a `Install Docker Desktop` cube.
+3. In that cube three different systems will be listed - Mac, Windows, and Linix. Click Mac.
+4. You should see two buttons - `Docker Desktop for Mac with Apple silicon` and `Docker Desktop for Mac with Intel chip`.
+5. Find out what chip your macbook is - 2019 and below use intel chips.
+6. Double click on the button with the correct chip - in this case I click `Docker Desktop for Mac with Intel chip`.
+7. Once that download is finished drag the `Docker.dmg` file onto your desktop
+8. Open your termnial.
+9. Run these commands:
+   
+```
+ $ sudo hdiutil attach Docker.dmg
+ $ sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
+ $ sudo hdiutil detach /Volumes/Docker
+```
+10. Docker Desktop is now installed to your applications folder.
+
+
+
   - how to build & configure a container (without building an image) that runs the `angular-site` application
   - summary of instructions stated in the repository `Dockerfile`
   - how to build an image from the repository `Dockerfile`
