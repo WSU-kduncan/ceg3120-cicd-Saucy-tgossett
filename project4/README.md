@@ -14,7 +14,7 @@
 
 #### What are we doing?
 
-We are containerizing an Angular web application using Docker for ease of deployment and scalability.
+ We are containerizing an Angular web application using Docker for ease of deployment and scalability.
 
 #### Why are we doing it?
 
