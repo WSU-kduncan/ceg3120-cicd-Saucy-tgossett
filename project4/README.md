@@ -96,3 +96,7 @@
 - triggers on logical action in repository
 - build an image based on your `Dockerfile`
 - pushes image to your DockerHub repository
+
+Resources:
+- [Unzipping in Terminal](https://www.reddit.com/r/techsupport/comments/rgo3mo/how_do_i_extract_zip_files_on_linux/)
+- [Installing Node with homebrew](https://nodejs.org/en/download/package-manager/all)
