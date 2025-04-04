@@ -102,3 +102,5 @@ Resources:
 - [Installing Node with homebrew](https://nodejs.org/en/download/package-manager/all)
 - [Finding IP on Mac](https://www.whatismybrowser.com/detect/what-is-my-local-ip-address/#macos)
 - [IP Command for Mac](https://discussions.apple.com/thread/7145789?sortBy=rank)
+- [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac)
+- [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
