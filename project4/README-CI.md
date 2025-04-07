@@ -104,3 +104,4 @@ Resources:
 - [IP Command for Mac](https://discussions.apple.com/thread/7145789?sortBy=rank)
 - [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac)
 - [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
+- [AI Overview on sharing files between Mac host and Docker containers](https://www.google.com/search?q=file+sharing+with+docker+on+mac&rlz=1C5CHFA_enUS1062US1062&oq=file+sharing+with+docker+on+mac&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQIRiPAjIHCAIQIRiPAtIBCDkwMzlqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8)
