@@ -105,3 +105,4 @@ Resources:
 - [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac)
 - [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
 - [AI Overview on sharing files between Mac host and Docker containers](https://www.google.com/search?q=file+sharing+with+docker+on+mac&rlz=1C5CHFA_enUS1062US1062&oq=file+sharing+with+docker+on+mac&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQIRiPAjIHCAIQIRiPAtIBCDkwMzlqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8)
+- [`docker ps -a` not updating - run log show](https://discussions.apple.com/thread/8312866?sortBy=rank)
