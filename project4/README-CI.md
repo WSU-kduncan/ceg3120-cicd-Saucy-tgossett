@@ -97,7 +97,7 @@
 - build an image based on your `Dockerfile`
 - pushes image to your DockerHub repository
 
-Resources:
+Helpful Resources:
 - [Unzipping in Terminal](https://www.reddit.com/r/techsupport/comments/rgo3mo/how_do_i_extract_zip_files_on_linux/)
 - [Installing Node with homebrew](https://nodejs.org/en/download/package-manager/all)
 - [Finding IP on Mac](https://www.whatismybrowser.com/detect/what-is-my-local-ip-address/#macos)
@@ -106,3 +106,4 @@ Resources:
 - [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
 - [How to share files between Mac host and Docker containers](https://docs.docker.com/desktop/settings-and-maintenance/settings/#file-sharing)
 - [`docker ps -a` not updating - run log show](https://discussions.apple.com/thread/8312866?sortBy=rank)
+- [Docker buildx](https://stackoverflow.com/questions/75739545/docker-buildx-error-buildkit-is-enabled-but-the-buildx-component-is-missing-or)
