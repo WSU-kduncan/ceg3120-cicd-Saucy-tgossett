@@ -14,15 +14,15 @@
 
 #### What are we doing?
 
- We are containerizing an Angular web application using Docker for ease of deployment and scalability.
+ We are containerizing an Angular web application using Docker so you can access it from your browser.
 
 #### Why are we doing it?
 
  - Ensures consistent application behavior across environments.
 
- - Simplifies deployment and testing.
+ - Simplify deployment and testing.
 
- - Enables efficient versioning and distribution via DockerHub.
+ - Easy distribution via DockerHub.
 
 #### Tools Used:
 
@@ -33,8 +33,6 @@
  - Angular: Frontend framework.
 
  - Node.js & npm: Required for building the Angular application.
-
- - EC2 (optional): Hosting environment.
 
 ### Containerizing your Application:
 
@@ -57,9 +55,18 @@
 ```
 10. Docker Desktop is now installed to your applications folder.
 
+#### Trouble Shooting
+
+If your having a problem with docker working after youve installed it (most commonly the day after it was innisaly downloaded) first make sure `Docker Desktop` is open and working. You should see the docker whale at the top of your screen by your batterie percantage. If it sill isnt working use these links, [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac) and [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
+
 
 
   - how to build & configure a container (without building an image) that runs the `angular-site` application
+
+#### Configuring the `Dockerfile`
+
+
+
   - summary of instructions stated in the repository `Dockerfile`
   - how to build an image from the repository `Dockerfile`
   - how to run a container from the image built by the repository `Dockerfile`
