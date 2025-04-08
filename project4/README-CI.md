@@ -12,27 +12,18 @@
 
 ### CI Project Overview
 
-#### What are we doing?
+#### What are we doing? Why?
 
- We are containerizing an Angular web application using Docker so you can access it from your browser.
-
-#### Why are we doing it?
-
- - Ensures consistent application behavior across environments.
-
- - Simplify deployment and testing.
-
- - Easy distribution via DockerHub.
+ This project containerizes a simple Angular web application (angular-site) using Docker. The goal is to learn the fundamentals of containerization, container image creation, and pushing an image to a public DockerHub repository. Using containers streamlines development and deployment. Which ensures consistency across different platforms.
 
 #### Tools Used:
 
- - Docker: Containerization platform.
-
- - DockerHub: Cloud-based container image repository.
-
- - Angular: Frontend framework.
-
- - Node.js & npm: Required for building the Angular application.
+ - Docker
+ - DockerHub
+ - Angular CLI
+ - Node.js (npm)
+ - GitHub
+ - node:18-bullseye
 
 ### Containerizing your Application:
 
@@ -55,15 +46,40 @@
 ```
 10. Docker Desktop is now installed to your applications folder.
 
+#### Confirming Docker is Installed
+
+To confirm if docker has been installed correctly run `docker --version` then test if you can run contianers by running `docker run hello-world` which will download and runs a test container from docker hub.
+
 #### Trouble Shooting
 
-If your having a problem with docker working after youve installed it (most commonly the day after it was innisaly downloaded) first make sure `Docker Desktop` is open and working. You should see the docker whale at the top of your screen by your batterie percantage. If it sill isnt working use these links, [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac) and [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
+If you're having a problem with Docker working after you've installed it on macOS (most commonly occurs a day or so after it was initially installed) first make sure `Docker Desktop` is open and working. You should see the docker whale at the top of your screen to the left of your batterie's percantage. If it sill isn't working use these links, [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac) and [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
 
-
+#### Manually Setting Up a Container
 
   - how to build & configure a container (without building an image) that runs the `angular-site` application
 
-#### Configuring the `Dockerfile`
+#### Dockerfile & Building Images
+
+##### Dockerfile Basics
+
+Instructions:
+- `FROM`: Selects base image (Node.js 18)
+    - (`Ubuntu` or in this case `node:18-bullseye`)
+- `WORKDIR`: Sets working directory in the container
+- `COPY`: Copies files into the container
+- `ADD`: Copies files from a specified source location into the container
+- `RUN`: Installs Angular CLI and dependencies
+- `EXPOSE`: Documents port 4200 (optional)
+- `CMD`: Starts the Angular app
+
+With the instructions above you can create your `Dockerfile` with a similar format to this:
+
+```
+Put code here
+```
+
+In this example ADD was used instead of COPY so `angular-site.zip` could be copyed from a specified location without already haveing to be unzipped. It was then unzipped with the `Put here` command and removed with `put here`.
+
 
 
 
