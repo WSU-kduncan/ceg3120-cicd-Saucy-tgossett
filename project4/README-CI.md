@@ -92,13 +92,13 @@ In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be 
 
 ##### Building the Image
 
-Use this command to build your image: `docker build -t angular-site .` 
-Where `-t` is tagging your image with the name `angular-site` and the `.` tells the consle that the `Dockerfile` it should use is in the same directory.
+Use this command to build your image: `docker build -t image-name .` 
+Where `-t` is tagging your image with the name `image-name` and the `.` tells the consle that the `Dockerfile` it should use is in the same directory.
 
 ##### Run a Container from the Image
 
-Use this command to run a container from your image: `docker run 4200:4200 angular-site`
-Where `4200:4200` is port mapping between your host and the container and `angular-site` tells the container what image to use.
+Use this command to run a container from your image: `docker run 4200:4200 --name container-name image-name`
+Where `4200:4200` is port mapping between your host and the container, `image-name` tells the container what image to use, and `--name container-name` gives the container a name of your choosing.
 
 ##### Verifying the Application 
 
@@ -106,7 +106,7 @@ Where `4200:4200` is port mapping between your host and the container and `angul
 
 There are two ways you can verify your container is running without leaving your terminal:
   - First you can use the command `docker ps -a` wich will bring up all containers on you system running or not. From there you can look under the status catorgory and if it says `up to [num]` where `[num]` is the number of hours/mins its been running.
-  - Second you can use the command `docker log [name of container]` which will outprint something like this if its working:
+  - Second you can use the command `docker log container-name` which will outprint something like this if its working:
 ```
 - Generating browser application bundles (phase: setup)...
 ✔ Browser application bundle generation complete.
