@@ -295,3 +295,4 @@ Helpful Resources:
 - [config.json - Invalid character '"' after object key:value pair](https://stackoverflow.com/questions/60417430/jfrog-artifactory-invalid-character-after-object-keyvalue-pair)
 - [Building a Dockerfile](https://docs.docker.com/get-started/workshop/09_image_best/)
 - [Copy a Zip into Dockerfile](https://stackoverflow.com/questions/65066846/dockerfile-copy-zip-and-open-it)
+- [Chat GPT - Used Only when scouring the web didn't work](https://chat.openai.com/)
