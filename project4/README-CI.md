@@ -60,7 +60,7 @@ You must be in the directory with only your `angular-bird.zip` in it.
 ##### **Step 1: Start a Container Using a Node Base Image**
 
 ```
-docker run -it -p 8080:4200 --name manual-container -v ${PWD}:/angular-site ubuntu bash
+docker run -it -p 8080:4200 --name manual-container -v ${PWD}:/angular-site node:18-bullseye bash
 ```
 Explanation of Flags:
   - `-it`: Opens interactive terminal access inside the container.
@@ -71,7 +71,7 @@ Explanation of Flags:
 
   - `-v ${PWD}:/angular-site`: Mounts the current host directory (containing your Angular app `.zip`) into /angular-site inside the container.
 
-  - `ubuntu`: The base image with Ubuntu.
+  - `node:18-bullseye`: The base image with node:18-bullseye.
 
 ##### **Step 2: Install Dependencies Inside the Container**
 
