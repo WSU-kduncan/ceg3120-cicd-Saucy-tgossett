@@ -154,7 +154,6 @@ Example `Dockerfile`:
 FROM node:18-bullseye
 
 RUN apt update
-RUN apt install -y npm
 RUN npm install -g -y @angular/cli
 RUN apt install -y unzip
 
