@@ -19,7 +19,7 @@ This project containerizes a simple Angular web application (angular-site) using
 
 ### Containerizing your Application:
 
-#### How to install docker + dependencies on MACOS
+#### **How to install docker + dependencies on MACOS**
 
   1. Open the [Docker Desktop](https://docs.docker.com/desktop/) link.
   2. Once inside scroll to the bottom of the page, you should see a `Install Docker Desktop` cube.
@@ -39,7 +39,7 @@ This project containerizes a simple Angular web application (angular-site) using
   ```
   9. Docker Desktop is now installed to your applications folder.
 
-#### Confirming Docker is Installed
+#### **Confirming Docker is Installed**
 
 To confirm if docker has been installed correctly:
 ```
@@ -48,7 +48,7 @@ docker run hello-world
 ```
 This tests that Docker can run containers successfully.
 
-#### Trouble Shooting
+#### **Trouble Shooting**
 
 If you're having a problem with Docker working after you've installed it on macOS (most commonly occurs a day or so after it was initially installed) first make sure `Docker Desktop` is open and working. You should see the docker whale at the top of your screen to the left of your batterie's percantage. If it sill isn't working use these links, [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac) and [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
 
@@ -57,7 +57,7 @@ If you're having a problem with Docker working after you've installed it on macO
 **IMPORTANT** 
 You must be in the directory with only your `angular-bird.zip` in it.
 
-##### Step 1: Start a Container Using a Node Base Image
+##### **Step 1: Start a Container Using a Node Base Image**
 
 ```
 docker run -it -p 8080:4200 --name manual-container -v ${PWD}:/angular-site ubuntu
@@ -73,7 +73,7 @@ Explanation of Flags:
 
   - `ubuntu`: The base image with Ubuntu.
 
-##### Step 2: Install Dependencies Inside the Container
+##### **Step 2: Install Dependencies Inside the Container**
 
 Once inside the container:
 ```
@@ -100,15 +100,15 @@ Install the project dependencies:
 npm install
 ```
 
-##### Step 3: Run the Angular Application
+##### **Step 3: Run the Angular Application**
 
 ```
 ng serve --host 0.0.0.0
 ```
 
-##### Verifying the Application 
+##### **Verifying the Application** 
 
-###### From Container Side
+###### *From Container Side*
 
 You should see output similar to:
 ```
@@ -126,7 +126,7 @@ Build at: 2025-04-08T03:21:15.805Z - Hash: c79711fd8a99397d - Time: 833ms
 
 ```
 
-###### From Host Side
+###### *From Host Side*
 
 Open your browser type in 
 ```
@@ -136,7 +136,7 @@ You should see your Angular site.( You will type in `8080` because we mapped our
 
 #### Dockerfile & Building Images
 
-##### Dockerfile Basics
+##### **Dockerfile Basics**
 
 Instructions:
   - `FROM`: Selects base image
@@ -174,7 +174,7 @@ CMD ["ng", "serve", "-o", "--host", "0.0.0.0"]
 
 In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be copyed from a specified location without already haveing to be unzipped. Its best practice to use `COPY` unless you specifically need the archive-extracting or URL-downloading features of `ADD`.
 
-##### Building the Image
+##### **Building the Image**
 
 ```
  docker build -t image-name .
@@ -182,7 +182,7 @@ In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be 
 - `-t` is tagging your image 
 - `.` refers to the current directory (where the Dockerfile is located)
 
-##### Run a Container from the Image
+##### **Run a Container from the Image**
 
 ```
 docker run 4200:4200 --name container-name image-name
@@ -191,9 +191,9 @@ docker run 4200:4200 --name container-name image-name
 - `image-name` tells the container what image to use
 -  `--name` gives the container a name of your choosing
 
-##### Verifying the Application 
+##### **Verifying the Application** 
 
-###### From Container Side
+###### *From Container Side*
 
 There are two ways you can verify your container is running without leaving your terminal:
   - `docker ps -a`  to list containers and check the Status column (e.g., Up X minutes)
@@ -213,7 +213,7 @@ Build at: 2025-04-08T03:21:15.805Z - Hash: c79711fd8a99397d - Time: 833ms
 
 ```
 
-###### From Host Side
+###### *From Host Side*
 
 Open your browser type in 
 ```
@@ -223,26 +223,26 @@ You should see your Angular site.
 
 #### Working with DockerHub
 
-##### Create Public Repo in DockerHub
+##### **Create Public Repo in DockerHub**
   1. Log into `https://hub.docker.com`
   2. Click `Repositories` → `Create Repository`
   3. Repository name: `YOURLASTNAME-ceg3120`
   4. Visibility: `Public`
   5. Click `Create`
 
-##### Create a Personal Access Token (PAT)
+##### **Create a Personal Access Token (PAT)**
   1. Go to your `DockerHub` → `Account Settings` → `Security` → `New Access Token`
   2. Change access permissions to `Read/Write`
   3. Copy the token (you will not see it again)
 
-##### Authenticate with DockerHub via CLI
+##### **Authenticate with DockerHub via CLI**
 
 ```
 docker login -u your-dockerhub-username
 ```
 When promted type in your personal access token (PAT)
 
-##### Push Image to DockerHub
+##### **Push Image to DockerHub**
 
 1. Tag your image
 ```
@@ -253,7 +253,7 @@ docker tag image-name your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
 docker push your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
 ```
 
-##### Link to my DockerHub repository for this project
+##### **Link to my DockerHub repository for this project**
 
    - [Saucydorito's CEG3120 Docker hub](https://hub.docker.com/repository/docker/saucydorito/gossett-ceg3120/general)
 
