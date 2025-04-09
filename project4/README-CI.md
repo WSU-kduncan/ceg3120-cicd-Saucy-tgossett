@@ -60,7 +60,7 @@ You must be in the directory with only your `angular-bird.zip` in it.
 ##### **Step 1: Start a Container Using a Node Base Image**
 
 ```
-docker run -it -p 8080:4200 --name manual-container -v ${PWD}:/angular-site ubuntu
+docker run -it -p 8080:4200 --name manual-container -v ${PWD}:/angular-site ubuntu bash
 ```
 Explanation of Flags:
   - `-it`: Opens interactive terminal access inside the container.
@@ -185,7 +185,7 @@ In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be 
 ##### **Run a Container from the Image**
 
 ```
-docker run 4200:4200 --name container-name image-name
+docker run 4200:4200 --name container-name image-name bash
 ```
 - `4200:4200` is port mapping between your host and the container
 - `image-name` tells the container what image to use
