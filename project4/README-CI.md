@@ -171,8 +171,8 @@ EXPOSE 4200
 
 CMD ["ng", "serve", "-o", "--host", "0.0.0.0"]
 ```
-
-In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be copyed from a specified location without already haveing to be unzipped. Its best practice to use `COPY` unless you specifically need the archive-extracting or URL-downloading features of `ADD`.
+[Building a Dockerfile]
+In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be copyed from a specified location without already haveing to be unzipped. Its best practice to use `COPY` unless you specifically need the archive-extracting or URL-downloading features of `ADD`. Head to [Copy a Zip into Dockerfile](https://stackoverflow.com/questions/65066846/dockerfile-copy-zip-and-open-it).
 
 ##### **Building the Image**
 
@@ -295,3 +295,4 @@ Helpful Resources:
 - [Docker buildx](https://stackoverflow.com/questions/75739545/docker-buildx-error-buildkit-is-enabled-but-the-buildx-component-is-missing-or)
 - [config.json - Invalid character '"' after object key:value pair](https://stackoverflow.com/questions/60417430/jfrog-artifactory-invalid-character-after-object-keyvalue-pair)
 - [Building a Dockerfile](https://docs.docker.com/get-started/workshop/09_image_best/)
+- [Copy a Zip into Dockerfile](https://stackoverflow.com/questions/65066846/dockerfile-copy-zip-and-open-it)
