@@ -256,11 +256,26 @@ docker push your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
 
    - [Saucydorito's CEG3120 Docker hub](https://hub.docker.com/repository/docker/saucydorito/gossett-ceg3120/general)
 
-## Part 2 - GitHub Actions and DockerHub ( / 5)
+## Part 2 - GitHub Actions and DockerHub
 
-- Configuring GitHub Secrets:
-  - How to set a secret for use by GitHub Actions
-  - What secret(s) are set for this project
+### Configuring GitHub Secrets:
+
+#### Creating a PAT for authentication 
+
+  1. Click on you github profile and click on settings, Once in settings scroll to the bottom and look towards the bottom left of the screen.
+  2. Click into `<> Devloper Settings`.
+  3. Click on the `Personal Access token` drop down menu and select `Tokens(classic)`.
+  4. In the top right of the screen click on `Genarate New Token` and select `Genarate New Token (classic)`.
+  5. Add a Note - What is it for?
+  6. Choose an experation date.
+  7. Click on the check box next to `repo` and `workflow`.
+  8. Scroll to the bottom and click `Generate token`.
+  9. Copy your token and keep it some where safe.
+
+#### How to set repository Secrets for use by GitHub Actions
+
+##### Secret(s) are set for this project
+
 - Behavior of GitHub workflow
   - summary of what your workflow does
   - **Link** to workflow file in your GitHub repository
