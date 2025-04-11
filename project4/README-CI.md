@@ -171,7 +171,7 @@ EXPOSE 4200
 CMD ["ng", "serve", "-o", "--host", "0.0.0.0"]
 ```
 [Building a Dockerfile]
-In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be copyed from a specified location without already haveing to be unzipped. Its best practice to use `COPY` unless you specifically need the archive-extracting or URL-downloading features of `ADD`. Head to [Copy a Zip into Dockerfile](https://stackoverflow.com/questions/65066846/dockerfile-copy-zip-and-open-it).
+In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be copyed from a specified location without already haveing to be unzipped. Its best practice to use `COPY` unless you specifically need the archive-extracting or URL-downloading features of `ADD`. Head to [ADD vs. COPY](https://phoenixnap.com/kb/docker-add-vscopy#:~:text=In%20the%20part%20where%20their,remote%20location%20via%20a%20URL.).
 
 ##### **Building the Image**
 
@@ -296,3 +296,4 @@ Helpful Resources:
 - [Building a Dockerfile](https://docs.docker.com/get-started/workshop/09_image_best/)
 - [Copy a Zip into Dockerfile](https://stackoverflow.com/questions/65066846/dockerfile-copy-zip-and-open-it)
 - [Chat GPT - Used Only when scouring the web didn't work](https://chat.openai.com/)
+- [ADD vs. COPY](https://phoenixnap.com/kb/docker-add-vs-copy#:~:text=In%20the%20part%20where%20their,remote%20location%20via%20a%20URL.)
