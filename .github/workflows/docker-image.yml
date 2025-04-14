@@ -21,7 +21,6 @@ jobs:
         name: Build Docker image
         uses: docker/build-push-action@v6
         with:
-	  context: .
           push: true
           tags: saucydorito/gossett-ceg3120:angular-site:latest
 
