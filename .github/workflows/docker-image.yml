@@ -24,5 +24,5 @@ jobs:
           context: ./project4/angular-site
           file: ./project4/angular-site/Dockerfile
           push: true
-          tags: saucydorito/gossett-ceg3120-angular-site:latest
+          tags: saucydorito/gossett-ceg3120:angular-site
 
