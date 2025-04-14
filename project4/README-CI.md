@@ -223,16 +223,18 @@ You should see your Angular site.
 #### Working with DockerHub
 
 ##### **Create Public Repo in DockerHub**
-  1. Log into `https://hub.docker.com`
+  1. Log into [DockerHub](https://hub.docker.com)
   2. Click `Repositories` → `Create Repository`
   3. Repository name: `YOURLASTNAME-ceg3120`
   4. Visibility: `Public`
   5. Click `Create`
 
 ##### **Create a Personal Access Token (PAT)**
-  1. Go to your `DockerHub` → `Account Settings` → `Security` → `New Access Token`
-  2. Change access permissions to `Read/Write`
-  3. Copy the token (you will not see it again)
+  1. Go to your `DockerHub` → `Account Settings` → `Personal Access Tokens`
+  2. Click `Generate new token`
+  3. Name your token
+  4. Change access permissions to `Read/Write`
+  5. Copy the token (you will not see it again)
 
 ##### **Authenticate with DockerHub via CLI**
 
@@ -260,41 +262,187 @@ docker push your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
 
 ### Configuring GitHub Secrets:
 
- #### Creating a PAT for authentication 
+ #### Creating a DockerHub PAT
 
-   1. Click on you github profile and click on settings, Once in settings scroll to the bottom and look towards the bottom left of the screen.
-   2. Click into `<> Devloper Settings`.
-   3. Click on the `Personal Access token` drop down menu and select `Tokens(classic)`.
-   4. In the top right of the screen click on `Genarate New Token` and select `Genarate New Token (classic)`.
-   5. Add a Note - What is it for?
-   6. Choose an experation date.
-   7. Click on the check box next to `repo` and `workflow`.
-   8. Scroll to the bottom and click `Generate token`.
-   9. Copy your token and keep it some where safe.
+  1. Log into [DockerHub](https://hub.docker.com)
+  2. Go to your `DockerHub` → `Account Settings` → `Personal Access Tokens`
+  3. Click `Generate new token`
+  4. Name your token
+  5. Change access permissions to `Read/Write`
+  6. Copy the token (you will not see it again)
 
-  #### How to set repository Secrets for use by GitHub Actions
+ #### How to set repository Secrets for use by GitHub Actions
+
+   1. In your GitHub repository, go to `Settings` →  `Secrets and variables` →  `Actions`
+   2. Add the following secrets in your `Repository secrets`:
+     - `DOCKER_USERNAME`: Your DockerHub username
+     - `DOCKER_TOKEN`: The DockerHub access token you created above
 
    ##### Secret(s) are set for this project
+   
+   - `DOCKER_USERNAME`:
+       - This secret holds your DockerHub username
+   - `DOCKER_TOKEN`:
+       - This secret holds the DockerHub access token that you created in `Creating a DockerHub PAT`. Which allows GitHub Actions to authenticate and perform push operations
 
 ### CI with GitHub Actions:
 
-  #### Summary of what your workflow does and when it does it
+Below is my `docker-image.yml`
+
+```
+name: docker-image-ci
+
+on:
+  push:
+    branches: [main]
+    workflow-dispatch:
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v4
+      -
+        name: Log in to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./project4/angular-site
+          file: ./project4/angular-site/Dockerfile
+          push: true
+          tags: saucydorito/gossett-ceg3120:angular-site
+```
+
+  #### Summary of what your workflow does and when
+  
+  When a commit is pushed to the main branch, this GitHub Actions workflow performs the following steps:
+    1. Checkout the Code:
+         - Retrieves the current repository code
+    2. Log in to DockerHub:
+         - Authenticates using DockerHub credentials stored in repository secrets (`DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN`)
+    3. Build and Push Docker Image:
+         - Builds the Docker image using the Dockerfile located at `./project4/angular-site/Dockerfile` (with `./project4/angular-site` as its build context) and pushes the image with the tag `saucydorito/gossett-ceg3120:angular-site` to DockerHub
 
   #### Explanation of workflow steps
 
+  **Triggering the Workflow:**
+   ```
+    name: docker-image-ci
+    
+    on:
+      push:
+        branches: [main]
+      workflow-dispatch:
+   ```
+   - name: Names your action
+   - push on main: Automatically runs the workflow when changes are pushed to the main branch
+   - workflow-dispatch: Allows you to manually trigger the workflow from the GitHub Actions tab
+  **Job Setup:**
+   ```
+    jobs:
+      build-and-push:
+        runs-on: ubuntu-latest
+   ```
+   - The job build-and-push will run on an ubuntu-latest virtual machine
+  **Steps:**
+  *Checkout step:*
+    ```
+    -
+    name: Checkout
+    uses: actions/checkout@v4
+    ```
+    - This step uses the `checkout action` to clone the repository code into the runner
+  *DockerHub Login:*
+   ```
+   -
+   name: Log in to DockerHub
+   uses: docker/login-action@v3
+   with:
+     username: ${{ secrets.DOCKERHUB_USERNAME }}
+     password: ${{ secrets.DOCKERHUB_TOKEN }}
+   ```
+   - This step logs into DockerHub using the provided secrets you created above
+  *Build and Push Docker Image:*
+  ```
+  -
+  name: Build Docker image
+  uses: docker/build-push-action@v6
+  with:
+    context: ./project4/angular-site
+    file: ./project4/angular-site/Dockerfile
+    push: true
+    tags: saucydorito/gossett-ceg3120-angular-site:latest
+  ```
+  - This step builds the Docker image with the specified build context and Dockerfile, then pushes it to DockerHub.
+      - `context`: The directory used for the Docker build
+      - `file`: Explicit path to the Dockerfile
+      - `push`: Setting this to true causes the image to be pushed to DockerHub after a successful build
+      - `tags`: The full name of the image including the tag. You need to update this to match your DockerHub repository and image naming convention
+
   #### Explanation / highlight of values that need updated if used in a different repository
 
+  When reusing this workflow in another repository, you may need to update the following:
+  
+  1. **Build Context and Dockerfile Path:**
+       - Update the context and file values if your Dockerfile is in a different location.
+```
+context: ./your/new/path
+file: ./your/new/path/Dockerfile
+```
+  2. **Image Tags:**
+       - Replace saucydorito/gossett-ceg3120-angular-site:latest with your DockerHub repository name and desired tag.
+```
+tags: yourdockerhubusername/your-repo:latest
+```
+  3. Repository Secrets:
+       - Ensure the secrets DOCKERHUB_USERNAME and DOCKERHUB_TOKEN are set in your new repository. If you change the secret names, update them in the workflow accordingly.
+
    ##### changes in workflow
+   
+   Changes in the Workflow File (.github/workflows/docker-image.yml):
+     - Update the YAML keys if your Docker build context or credentials change.
+     - Change the image tag as needed.
  
    ##### changes in repository
+   
+   Changes in the Repository:
+     - Reorganize directories or rename the Dockerfile? Then update the context and file paths in the workflow file.
+     - If you add new build requirements (e.g., passing additional build arguments), update the workflow step accordingly.
  
    #### Link to workflow file in your GitHub repository
+   
+   [Link to my workflow file in GitHub](https://github.com/WSU-kduncan/ceg3120-cicd-Saucy-tgossett/blob/main/.github/workflows/docker-image.yml)
 
 ### Testing & Validating
 
   #### How to test that your workflow did its tasking
+   
+  ##### Monitor the Run:
+   
+   1. Navigate to the Actions tab in your repository.
+   2. Check that the job steps complete without errors.
+   3. Verify that the logs indicate a successful Docker image build and push.
 
-  #### How to verify that the image in DockerHub works when a container is run using the image
+  #### How to verify that the image in DockerHub works
+  
+  ##### Check DockerHub Repository:
+  
+  1. Log in to your DockerHub account
+  2. Verify that the image `DOCKER_USERNAME/REPO_NAME:TAG` appears in the repository
+
+  ##### Run the Docker Container Locally:
+  
+  1. Pull the image:
+       - `docker pull DOCKER_USERBNAME/REPO_NAME:TAG`
+  2. Run the container:
+       - `docker run --rm DOCKER_USERBNAME/REPO_NAME:TAG`
+           - Confirm that the container starts up and the application or service in the container behaves as expected
 
 ## Part 3 - Diagram ( / 2)
 
