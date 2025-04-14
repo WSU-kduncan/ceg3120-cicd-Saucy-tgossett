@@ -21,6 +21,8 @@ jobs:
         name: Build Docker image
         uses: docker/build-push-action@v6
         with:
+	  context: ceg3120-cicd-Saucy-tgossett/project4/angular-site
+	  file: ceg3120-cicd-Saucy-tgossett/project4/angular-site/Dockerfile
           push: true
           tags: saucydorito/gossett-ceg3120-angular-site:latest
 
