@@ -263,7 +263,7 @@ When promoted copy over your personal access token (PAT).
 
 #### *Creating a DockerHub PAT*
 
-We have already done this above please reference [Creating a Personal Access Token (PAT)](#Creating-a-Personal-Access-Token-(PAT)) if you need a reminder!
+We have already done this above please reference [Creating a Personal Access Token (PAT)](#creating-a-personal-access-token-pat) if you need a reminder!
 
 #### *How to set repository Secrets for use by GitHub Actions*
 
@@ -272,7 +272,7 @@ We have already done this above please reference [Creating a Personal Access Tok
     - `DOCKERHUB_USERNAME`:
         - This secret holds your DockerHub username.
     - `DOCKER_TOKEN`:
-        - This secret holds the DockerHub access token that you created in [Creating a Personal Access Token (PAT)](#Creating-a-Personal-Access-Token-(PAT)).
+        - This secret holds the DockerHub access token that you created in [Creating a Personal Access Token (PAT)](#creating-a-personal-access-token-pat).
 
 ### CI with GitHub Actions:
 
