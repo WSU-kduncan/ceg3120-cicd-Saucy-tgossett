@@ -183,7 +183,7 @@ CMD ["ng", "serve", "-o", "--host", "0.0.0.0"]
 ##### Run a Container from the Image
 
 ```
-docker run 4200:4200 --name container-name image-name bash
+docker run -it -p 4200:4200 --name container-name image-name bash
 ```
 - `4200:4200` - Is port mapping between your host and the container.
 - `image-name` - Tells the container what image to use.
@@ -255,7 +255,7 @@ When promoted copy over your personal access token (PAT).
 
 ##### Link to my DockerHub Repository
 
-- [Saucydorito's CEG3120 Docker hub](https://hub.docker.com/repository/docker/saucydorito/gossett-ceg3120/general)
+- [Saucydorito's CEG3120 Docker hub](https://hub.docker.com/r/saucydorito/gossett-ceg3120/tags)
 
 ## Part 2 - GitHub Actions and DockerHub
 
