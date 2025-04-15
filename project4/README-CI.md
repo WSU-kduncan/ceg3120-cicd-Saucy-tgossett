@@ -4,76 +4,75 @@
 
 ### CI Project Overview
 
-#### What are we doing? Why?
+#### *What are We Doing? Why?*
 
-This project containerizes a simple Angular web application (angular-site) using Docker. The goal is to learn the fundamentals of containerization, container image creation, and pushing an image to a public DockerHub repository. Using containers streamlines development and deployment. Which ensures consistency across different platforms.
+This project containerizes a simple Angular web application (angular-site) using Docker. The goal is to learn the fundamentals of
+containerization, container image creation, and pushing an image to a public DockerHub repository. Using containers streamlines
+development and deployment. Which ensures consistency across different platforms.
 
-#### Tools Used:
+#### *Tools Used:*
 
- - Docker
- - DockerHub
- - Angular CLI
- - Node.js (npm)
- - GitHub
- - node:18-bullseye
+- Docker
+- DockerHub
+- Angular CLI
+- Node.js (npm)
+- GitHub
+- node:18-bullseye
 
 ### Containerizing your Application:
 
-#### **How to install docker + dependencies on MACOS**
+#### *How to Install Docker + Dependencies on MACOS*
 
-  1. Open the [Docker Desktop](https://docs.docker.com/desktop/) link.
-  2. Once inside scroll to the bottom of the page, you should see a `Install Docker Desktop` cube.
-  3. In that cube three different systems will be listed - Mac, Windows, and Linix. Click **Mac**.
-  4. Choose your chip:  
-   - `Docker Desktop for Mac with Apple silicon`  
-   - `Docker Desktop for Mac with Intel chip` (Macs from 2019 and earlier)
-  5. Download the correct version.
-  6. Once that download is finished drag the `Docker.dmg` file onto your desktop.
-  7. Open your termnial.
-  8. Run these commands:
-   
+1. Open [Docker Desktop](https://docs.docker.com/desktop/).
+2. Once inside scroll to the bottom of the page, you should see a `Install Docker Desktop` cube.
+3. In that cube three different systems will be listed - Mac, Windows, and Linux. Click **Mac**.
+4. Choose your chip:
+     - `Docker Desktop for Mac with Apple silicon`
+     - `Docker Desktop for Mac with Intel chip` (Macs from 2019 and earlier)
+5. Download the correct version.
+6. Once that download is finished drag the `Docker.dmg` file onto your desktop.
+7. Open your terminal.
+8. Run these commands:
+    ```
+     $ sudo hdiutil attach Docker.dmg
+     $ sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
+     $ sudo hdiutil detach /Volumes/Docker
+    ```
+9. Docker Desktop is now installed to your applications folder.
+
+#### *Confirming Docker is Installed*
+
+To confirm if docker has been installed correctly and test that Docker can run containers successfully use the code below:
   ```
-   $ sudo hdiutil attach Docker.dmg
-   $ sudo /Volumes/Docker/Docker.app/Contents/MacOS/install
-   $ sudo hdiutil detach /Volumes/Docker
+  docker --version
+  docker run hello-world
   ```
-  9. Docker Desktop is now installed to your applications folder.
 
-#### **Confirming Docker is Installed**
+#### *Trouble Shooting*
 
-To confirm if docker has been installed correctly:
-```
-docker --version
-docker run hello-world
-```
-This tests that Docker can run containers successfully.
+If you're having a problem with Docker working after you've installed it on macOS (most commonly occurs a day or so after it was
+initially installed) first make sure `Docker Desktop` is open and working. You should see the docker whale at the top of your screen to
+the left of your batteries' percentage. If it still isn't working follow the steps within these links, [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac) and [Docker not working on Mac(re-downloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
 
-#### **Trouble Shooting**
+#### *Manually Setting Up a Container*
 
-If you're having a problem with Docker working after you've installed it on macOS (most commonly occurs a day or so after it was initially installed) first make sure `Docker Desktop` is open and working. You should see the docker whale at the top of your screen to the left of your batterie's percantage. If it sill isn't working use these links, [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac) and [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
+> ***IMPORTANT***
+> 
+> You must be in the directory with your `angular-bird.zip` in it!
 
-#### Manually Setting Up a Container
-
-**IMPORTANT** 
-You must be in the directory with only your `angular-bird.zip` in it.
-
-##### **Step 1: Start a Container Using a Node Base Image**
+##### Step 1: Start a Container Using a Node Base Image
 
 ```
 docker run -it -p 8080:4200 --name manual-container -v ${PWD}:/angular-site node:18-bullseye bash
 ```
 Explanation of Flags:
-  - `-it`: Opens interactive terminal access inside the container.
+- `-it` - Opens interactive terminal access inside the container.
+- `-p 8080:4200` - Maps port 8080 of the container to port 4200 on your host.
+- `--name manual-ng-container` - Names the container for easier reference.
+- `-v ${PWD}:/angular-site` - Mounts the current host directory (containing your Angular app `.zip`) into /angular-site inside the container.
+- `node:18-bullseye` - The base image with node:18-bullseye.
 
-  - `-p 8080:4200`: Maps port 8080 of the container to port 4200 on your host.
-
-  - `--name manual-ng-container`: Names the container for easier reference.
-
-  - `-v ${PWD}:/angular-site`: Mounts the current host directory (containing your Angular app `.zip`) into /angular-site inside the container.
-
-  - `node:18-bullseye`: The base image with node:18-bullseye.
-
-##### **Step 2: Install Dependencies Inside the Container**
+##### Step 2: Install Dependencies Inside the Container
 
 Once inside the container:
 ```
@@ -84,29 +83,29 @@ npm install -g @angular/cli
 cd angular-site
 ```
 
-Unzip `angular-bird.zip`:
+Unzips `angular-bird.zip`:
 ```
 unzip angular-bird.zip
 rm -r angular-bird.zip
 ```
 
-Navigate to your Angular project folder:
+Navigates to your Angular project folder:
 ```
 cd wsu-hw-ng-main
 ```
 
-Install the project dependencies:
+Installs the project dependencies:
 ```
 npm install
 ```
 
-##### **Step 3: Run the Angular Application**
+##### Step 3: Run the Angular Application
 
 ```
 ng serve --host 0.0.0.0
 ```
 
-##### **Verifying the Application** 
+##### Verifying the Application
 
 ###### *From Container Side*
 
@@ -128,25 +127,25 @@ Build at: 2025-04-08T03:21:15.805Z - Hash: c79711fd8a99397d - Time: 833ms
 
 ###### *From Host Side*
 
-Open your browser type in 
+Open your browser type in
 ```
 http://localhost:8080
 ```
 You should see your Angular site.( You will type in `8080` because we mapped our container to `8080:4200`)
 
-#### Dockerfile & Building Images
+#### *Dockerfile & Building Images*
 
-##### **Dockerfile Basics**
+##### Dockerfile Basics
 
 Instructions:
-  - `FROM`: Selects base image
-      - e.g, `Ubuntu` or in this case `node:18-bullseye`
-  - `WORKDIR`: Sets working directory in the container
-  - `COPY`: Copies files into the container
-  - `ADD`: Copies files from a specified source location into the container
-  - `RUN`: Installs Angular CLI and dependencies
-  - `EXPOSE`: Documents port 4200 (optional)
-  - `CMD`: Starts the Angular app
+- `FROM` - Selects base image
+    - e.g, `Ubuntu` or in this case `node:18-bullseye`
+- `WORKDIR` - Sets working directory in the container
+- `COPY` - Copies files into the container
+- `ADD` - Copies files from a specified source location into the container
+- `RUN` - Installs Angular CLI and dependencies
+- `EXPOSE` - Documents port 4200 (optional)
+- `CMD` - Starts the Angular app
 
 Example `Dockerfile`:
 
@@ -170,33 +169,33 @@ EXPOSE 4200
 
 CMD ["ng", "serve", "-o", "--host", "0.0.0.0"]
 ```
-[Building a Dockerfile]
-In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be copyed from a specified location without already haveing to be unzipped. Its best practice to use `COPY` unless you specifically need the archive-extracting or URL-downloading features of `ADD`. Head to [ADD vs. COPY](https://phoenixnap.com/kb/docker-add-vscopy#:~:text=In%20the%20part%20where%20their,remote%20location%20via%20a%20URL.).
 
-##### **Building the Image**
+> In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be copied from a specified location without already having to be unzipped. Its best practice to use `COPY` unless you specifically need the archive-extracting or URL-downloading features of `ADD`. Head to [ADD vs. COPY](https://phoenixnap.com/kb/docker-add-vscopy#:~:text=In%20the%20part%20where%20their,remote%20location%20via%20a%20URL.) to learn more.
+
+##### Building the Image
 
 ```
  docker build -t image-name .
 ```
-- `-t` is tagging your image 
-- `.` refers to the current directory (where the Dockerfile is located)
+- `-t` - Is tagging your image
+- `.` - Refers to the current directory (where the Dockerfile is located)
 
-##### **Run a Container from the Image**
+##### Run a Container from the Image
 
 ```
 docker run 4200:4200 --name container-name image-name bash
 ```
-- `4200:4200` is port mapping between your host and the container
-- `image-name` tells the container what image to use
--  `--name` gives the container a name of your choosing
+- `4200:4200` - Is port mapping between your host and the container
+- `image-name` - Tells the container what image to use
+-  `--name` - Gives the container a name of your choosing
 
-##### **Verifying the Application** 
+##### Verifying the Application
 
 ###### *From Container Side*
 
 There are two ways you can verify your container is running without leaving your terminal:
-  - `docker ps -a`  to list containers and check the Status column (e.g., Up X minutes)
-  - `docker log container-name` which will outprint something like this if its working:
+- `docker ps -a`  to list containers and check the Status column (e.g., Up X minutes)
+- `docker log container-name` which will out-print something like this if its working:
 ```
 ** Angular Live Development Server is listening on 0.0.0.0:4200, open your browser on http://localhost:4200/ **
 
@@ -214,76 +213,71 @@ Build at: 2025-04-08T03:21:15.805Z - Hash: c79711fd8a99397d - Time: 833ms
 
 ###### *From Host Side*
 
-Open your browser type in 
+Open your browser type in
 ```
 http://localhost:4200
 ```
 You should see your Angular site.
 
-#### Working with DockerHub
+#### *Working with DockerHub*
 
-##### **Create Public Repo in DockerHub**
-  1. Log into [DockerHub](https://hub.docker.com)
-  2. Click `Repositories` → `Create Repository`
-  3. Repository name: `YOURLASTNAME-ceg3120`
-  4. Visibility: `Public`
-  5. Click `Create`
+##### Create Public Repo in DockerHub
+1. Log into [DockerHub](https://hub.docker.com)
+2. Click `Repositories` → `Create Repository`
+3. Repository name: `YOURLASTNAME-ceg3120`
+4. Visibility: `Public`
+5. Click `Create`
 
-##### **Create a Personal Access Token (PAT)**
-  1. Go to your `DockerHub` → `Account Settings` → `Personal Access Tokens`
-  2. Click `Generate new token`
-  3. Name your token
-  4. Change access permissions to `Read/Write`
-  5. Copy the token (you will not see it again)
+##### Create a Personal Access Token (PAT)
+1. Go to your `DockerHub` → `Account Settings` → `Personal Access Tokens`
+2. Click `Generate new token`
+3. Name your token
+4. Change access permissions to `Read/Write`
+5. Copy the token (you will not see it again)
 
-##### **Authenticate with DockerHub via CLI**
+##### Authenticate with DockerHub via CLI
 
 ```
 docker login -u your-dockerhub-username
 ```
-When promted type in your personal access token (PAT)
+When promoted copy over your personal access token (PAT)
 
-##### **Push Image to DockerHub**
+##### Push Image to DockerHub
 
 1. Tag your image
-```
-docker tag image-name your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
-```
-3. Push your image `Dockerhub`
-```
-docker push your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
-```
+      ```
+      docker tag image-name your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
+      ```
+2. Push your image `Dockerhub`
+      ```
+      docker push your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
+      ```
 
-##### **Link to my DockerHub repository for this project**
+##### Link to my DockerHub Repository
 
-   - [Saucydorito's CEG3120 Docker hub](https://hub.docker.com/repository/docker/saucydorito/gossett-ceg3120/general)
+- [Saucydorito's CEG3120 Docker hub](https://hub.docker.com/repository/docker/saucydorito/gossett-ceg3120/general)
 
 ## Part 2 - GitHub Actions and DockerHub
 
 ### Configuring GitHub Secrets:
 
- #### Creating a DockerHub PAT
+#### *Creating a DockerHub PAT*
 
-  1. Log into [DockerHub](https://hub.docker.com)
-  2. Go to your `DockerHub` → `Account Settings` → `Personal Access Tokens`
-  3. Click `Generate new token`
-  4. Name your token
-  5. Change access permissions to `Read/Write`
-  6. Copy the token (you will not see it again)
+1. Log into [DockerHub](https://hub.docker.com)
+2. Go to your `DockerHub` → `Account Settings` → `Personal Access Tokens`
+3. Click `Generate new token`
+4. Name your token
+5. Change access permissions to `Read/Write`
+6. Copy the token (you will not see it again)
 
- #### How to set repository Secrets for use by GitHub Actions
+#### *How to set repository Secrets for use by GitHub Actions*
 
-   1. In your GitHub repository, go to `Settings` →  `Secrets and variables` →  `Actions`
-   2. Add the following secrets in your `Repository secrets`:
-     - `DOCKER_USERNAME`: Your DockerHub username
-     - `DOCKER_TOKEN`: The DockerHub access token you created above
-
-   ##### Secret(s) are set for this project
-   
-   - `DOCKER_USERNAME`:
-       - This secret holds your DockerHub username
+1. In your GitHub repository, go to `Settings` →  `Secrets and variables` →  `Actions`
+2. Add the following secrets in your `Repository secrets`:
+   - `DOCKERHUB_USERNAME`:
+     - This secret holds your DockerHub username
    - `DOCKER_TOKEN`:
-       - This secret holds the DockerHub access token that you created in `Creating a DockerHub PAT`. Which allows GitHub Actions to authenticate and perform push operations
+     - This secret holds the DockerHub access token that you created in `Creating a DockerHub PAT`
 
 ### CI with GitHub Actions:
 
@@ -319,19 +313,11 @@ jobs:
           tags: saucydorito/gossett-ceg3120:angular-site
 ```
 
-  #### Summary of what your workflow does and when
-  
-  When a commit is pushed to the main branch, this GitHub Actions workflow performs the following steps:
-    1. Checkout the Code:
-         - Retrieves the current repository code
-    2. Log in to DockerHub:
-         - Authenticates using DockerHub credentials stored in repository secrets (`DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN`)
-    3. Build and Push Docker Image:
-         - Builds the Docker image using the Dockerfile located at `./project4/angular-site/Dockerfile` (with `./project4/angular-site` as its build context) and pushes the image with the tag `saucydorito/gossett-ceg3120:angular-site` to DockerHub
+#### *Summary of What your Workflow Does and When*
 
-  #### Explanation of workflow steps
+When the `.yml` workflow commit is pushed to the `[main]` branch it follows these steps:
 
-  **Triggering the Workflow:**
+***Triggering the Workflow:***
    ```
     name: docker-image-ci
     
@@ -340,25 +326,29 @@ jobs:
         branches: [main]
       workflow-dispatch:
    ```
-   - name: Names your action
-   - push on main: Automatically runs the workflow when changes are pushed to the main branch
-   - workflow-dispatch: Allows you to manually trigger the workflow from the GitHub Actions tab
-  **Job Setup:**
+- `name` - Names your action
+- `branches: [main]` - Runs the workflow as soon as changes are pushed to the main branch
+- `workflow-dispatch:` - Allows you to manually trigger pipelines and enter unique inputs for each run
+
+***Job Setup:***
    ```
     jobs:
       build-and-push:
         runs-on: ubuntu-latest
    ```
-   - The job build-and-push will run on an ubuntu-latest virtual machine
-  **Steps:**
-  *Checkout step:*
-    ```
-    -
-    name: Checkout
-    uses: actions/checkout@v4
-    ```
-    - This step uses the `checkout action` to clone the repository code into the runner
-  *DockerHub Login:*
+- The job `build-and-push` makes it so the `.yml` will run on the latest version of ubuntu within a virtual machine
+
+***Steps:***
+
+*Checkout step:*
+```
+-
+name: Checkout
+uses: actions/checkout@v4
+```
+- This step uses the `checkout action` to clone the repository code into the workflow's runner
+
+*DockerHub Login:*
    ```
    -
    name: Log in to DockerHub
@@ -367,8 +357,9 @@ jobs:
      username: ${{ secrets.DOCKERHUB_USERNAME }}
      password: ${{ secrets.DOCKERHUB_TOKEN }}
    ```
-   - This step logs into DockerHub using the provided secrets you created above
-  *Build and Push Docker Image:*
+- This step logs into DockerHub using the provided secrets you created above
+
+*Build and Push Docker Image:*
   ```
   -
   name: Build Docker image
@@ -379,70 +370,60 @@ jobs:
     push: true
     tags: saucydorito/gossett-ceg3120-angular-site:latest
   ```
-  - This step builds the Docker image with the specified build context and Dockerfile, then pushes it to DockerHub.
-      - `context`: The directory used for the Docker build
-      - `file`: Explicit path to the Dockerfile
-      - `push`: Setting this to true causes the image to be pushed to DockerHub after a successful build
-      - `tags`: The full name of the image including the tag. You need to update this to match your DockerHub repository and image naming convention
+- This step builds the Docker image with the build context specified within the Dockerfile you created in `Part 1`, then pushes it to DockerHub.
+    - `context` - The directory where the Dockerfile is located
+    - `file` - Path to the Dockerfile
+    - `push` - Setting this to `true` causes the image to be pushed to DockerHub after it's successfully built
+    - `tags` - Lists the `user` and the directory you want to push your completed image to
 
-  #### Explanation / highlight of values that need updated if used in a different repository
+#### *What Needs to be Updated if using Workflow in a Different Repository*
 
-  When reusing this workflow in another repository, you may need to update the following:
-  
-  1. **Build Context and Dockerfile Path:**
-       - Update the context and file values if your Dockerfile is in a different location.
+If you were going to recreate this workflow in another repository, you will need to update the following:
+
+1. **Build Context and Dockerfile Path:**
+    - Update the context and file values if your Dockerfile is in a different location.
 ```
 context: ./your/new/path
 file: ./your/new/path/Dockerfile
 ```
-  2. **Image Tags:**
-       - Replace saucydorito/gossett-ceg3120-angular-site:latest with your DockerHub repository name and desired tag.
+2. **Image Tags:**
+    - Replace `saucydorito/gossett-ceg3120-angular-site:latest` with your DockerHub repository name and desired tag.
 ```
 tags: yourdockerhubusername/your-repo:latest
 ```
-  3. Repository Secrets:
-       - Ensure the secrets DOCKERHUB_USERNAME and DOCKERHUB_TOKEN are set in your new repository. If you change the secret names, update them in the workflow accordingly.
+3. **Repository Secrets:**
+    - Ensure the secrets `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` are set in your repository and if your using different secret names make sure to update the workflow accordingly.
 
-   ##### changes in workflow
-   
-   Changes in the Workflow File (.github/workflows/docker-image.yml):
-     - Update the YAML keys if your Docker build context or credentials change.
-     - Change the image tag as needed.
- 
-   ##### changes in repository
-   
-   Changes in the Repository:
-     - Reorganize directories or rename the Dockerfile? Then update the context and file paths in the workflow file.
-     - If you add new build requirements (e.g., passing additional build arguments), update the workflow step accordingly.
- 
-   #### Link to workflow file in your GitHub repository
-   
-   [Link to my workflow file in GitHub](https://github.com/WSU-kduncan/ceg3120-cicd-Saucy-tgossett/blob/main/.github/workflows/docker-image.yml)
+#### *Link to Workflow File in my GitHub Repository*
+
+ - [Link to my Workflow File in GitHub](https://github.com/WSU-kduncan/ceg3120-cicd-Saucy-tgossett/blob/main/.github/workflows/docker-image.yml)
 
 ### Testing & Validating
 
-  #### How to test that your workflow did its tasking
-   
-  ##### Monitor the Run:
-   
-   1. Navigate to the Actions tab in your repository.
-   2. Check that the job steps complete without errors.
-   3. Verify that the logs indicate a successful Docker image build and push.
+#### *How to Test that your Workflow did its Tasking*
 
-  #### How to verify that the image in DockerHub works
-  
-  ##### Check DockerHub Repository:
-  
-  1. Log in to your DockerHub account
-  2. Verify that the image `DOCKER_USERNAME/REPO_NAME:TAG` appears in the repository
+##### Monitor the Run:
 
-  ##### Run the Docker Container Locally:
-  
-  1. Pull the image:
-       - `docker pull DOCKER_USERBNAME/REPO_NAME:TAG`
-  2. Run the container:
-       - `docker run --rm DOCKER_USERBNAME/REPO_NAME:TAG`
-           - Confirm that the container starts up and the application or service in the container behaves as expected
+1. Navigate to the Actions tab in your repository.
+2. Check that the job steps complete without errors.
+     - If your quick enough you can watch it building!
+3. Verify that the logs indicate a successful Docker image build and push.
+
+#### *How to Verify that the Image in DockerHub Works*
+
+##### Check DockerHub Repository:
+
+1. Log in to your DockerHub account
+2. Verify that the image `DOCKER_USERNAME/REPO_NAME:TAG` appears in the desired repository
+
+##### Run the Docker Container Locally:
+
+1. Pull the image:
+    - `docker pull DOCKER_USERBNAME/REPO_NAME:TAG`
+2. Run the container:
+    - `docker run --rm DOCKER_USERBNAME/REPO_NAME:TAG`
+        - Confirm that the container starts up and the application or service in the container behaves as expected
+        - Using the `--rm` flag will remove the container once you exit so everything stays clean. Remove tag if you want container to keep running once it has been closed.
 
 ## Part 3 - Diagram ( / 2)
 
@@ -466,12 +447,12 @@ Helpful Resources:
 - [Finding IP on Mac](https://www.whatismybrowser.com/detect/what-is-my-local-ip-address/#macos)
 - [IP Command for Mac](https://discussions.apple.com/thread/7145789?sortBy=rank)
 - [Docker not working on Mac(adding path)](https://stackoverflow.com/questions/64009138/docker-command-not-found-when-running-on-mac)
-- [Docker not working on Mac(redownloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
+- [Docker not working on Mac(re-downloading with brew)](https://stackoverflow.com/questions/44084846/cannot-connect-to-the-docker-daemon-on-macos)
 - [How to share files between Mac host and Docker containers](https://docs.docker.com/desktop/settings-and-maintenance/settings/#file-sharing)
 - [`docker ps -a` not updating - run log show](https://discussions.apple.com/thread/8312866?sortBy=rank)
 - [Docker buildx](https://stackoverflow.com/questions/75739545/docker-buildx-error-buildkit-is-enabled-but-the-buildx-component-is-missing-or)
 - [config.json - Invalid character '"' after object key:value pair](https://stackoverflow.com/questions/60417430/jfrog-artifactory-invalid-character-after-object-keyvalue-pair)
 - [Building a Dockerfile](https://docs.docker.com/get-started/workshop/09_image_best/)
 - [Copy a Zip into Dockerfile](https://stackoverflow.com/questions/65066846/dockerfile-copy-zip-and-open-it)
-- [Chat GPT - Used Only when scouring the web didn't work](https://chat.openai.com/)
+- [ChatGPT - Used Only when scouring the web didn't work](https://chat.openai.com/)
 - [ADD vs. COPY](https://phoenixnap.com/kb/docker-add-vs-copy#:~:text=In%20the%20part%20where%20their,remote%20location%20via%20a%20URL.)
