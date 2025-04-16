@@ -422,7 +422,6 @@ tags: yourdockerhubusername/your-repo:latest
 
 ## Part 3 - Diagram
 
-<h4 align="center">Simple Diagram</h4>
 <p align="center">
    
  ![Diagram](<diagram/CICD-Project-flow.png>)
