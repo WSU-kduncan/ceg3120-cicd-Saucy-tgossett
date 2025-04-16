@@ -420,9 +420,13 @@ tags: yourdockerhubusername/your-repo:latest
         - Confirm that the container starts up and the application or service in the container behaves as expected.
         - Using the `--rm` flag will remove the container once you exit so everything stays clean. Remove tag if you want container to keep running once it has been closed.
 
-## Part 3 - Diagram ( / 2)
+## Part 3 - Diagram
 
-- Logically diagrammed steps for this project's continuous integration workflow
+<h4 align="center">Simple Diagram</h4>
+<p align="center">
+   
+ ![Diagram](<diagram/CICD-Project-flow.png>)
+</p>
 
 
 ***Helpful Resources:***
