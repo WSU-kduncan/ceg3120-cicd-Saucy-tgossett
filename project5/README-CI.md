@@ -391,7 +391,7 @@ tags: yourdockerhubusername/your-repo:latest
 
 #### *Link to Workflow File in my GitHub Repository*
 
-- [Link to my Workflow File in GitHub](https://github.com/WSU-kduncan/ceg3120-cicd-Saucy-tgossett/blob/main/.github/workflows/docker-image.yml)
+- [Link to my Workflow File in GitHub](https://github.com/WSU-kduncan/ceg3120-cicd-Saucy-tgossett/blob/main/.github/workflows)
 
 ### Testing & Validating
 
