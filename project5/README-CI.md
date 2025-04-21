@@ -247,11 +247,11 @@ When promoted copy over your personal access token (PAT).
 
 1. Tag your image
       ```
-      docker tag image-name your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
+      docker tag image-name your-dockerhub-username/your_repo_name:latest
       ```
 2. Push your image `Dockerhub`
       ```
-      docker push your-dockerhub-username/YOURLASTNAME-CEG3120:tag-name
+      docker push your-dockerhub-username/your_repo_name:latest
       ```
 
 ##### Link to my DockerHub Repository
