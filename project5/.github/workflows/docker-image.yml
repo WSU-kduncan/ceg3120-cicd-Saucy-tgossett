@@ -39,8 +39,8 @@ jobs:
         name: Build Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./project4/angular-site
-          file: ./project4/angular-site/Dockerfile
+          context: ./project5/angular-site
+          file: ./project5/angular-site/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
