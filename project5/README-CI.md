@@ -169,6 +169,7 @@ EXPOSE 4200
 CMD ["ng", "serve", "-o", "--host", "0.0.0.0"]
 ```
 
+> [!NOTE]
 > In this example `ADD` was used instead of `COPY` so `angular-bird.zip` could be copied from a specified location without already having to be unzipped. Its best practice to use `COPY` unless you specifically need the archive-extracting or URL-downloading features of `ADD`. Head to [ADD vs. COPY](https://phoenixnap.com/kb/docker-add-vscopy#:~:text=In%20the%20part%20where%20their,remote%20location%20via%20a%20URL.) to learn more.
 
 ##### Building the Image
@@ -182,7 +183,7 @@ CMD ["ng", "serve", "-o", "--host", "0.0.0.0"]
 ##### Run a Container from the Image
 
 ```
-docker run -it -p 4200:4200 --name container-name image-name bash
+docker run -it -d -p 4200:4200 --name container-name image-name
 ```
 - `4200:4200` - Is port mapping between your host and the container.
 - `image-name` - Tells the container what image to use.
@@ -194,7 +195,8 @@ docker run -it -p 4200:4200 --name container-name image-name bash
 
 There are two ways you can verify your container is running without leaving your terminal:
 - `docker ps -a`  to list containers and check the Status column (e.g., Up X minutes).
-- `docker log container-name` which will out-print something like this if its working:
+  
+- `docker run image-name` which will out-print something like this if its working:
 ```
 ** Angular Live Development Server is listening on 0.0.0.0:4200, open your browser on http://localhost:4200/ **
 
