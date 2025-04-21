@@ -56,8 +56,7 @@ the left of your batteries' percentage. If it still isn't working follow the ste
 
 #### *Manually Setting Up a Container*
 
-> WARNING
->
+> [!IMPORTANT]  
 > You must be in the directory with your `angular-bird.zip` in it!
 
 ##### Step 1: Start a Container Using a Node Base Image
