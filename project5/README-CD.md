@@ -1,43 +1,34 @@
 # Project 5 Rubric
 
-Edited `Dockerfile` for **Project 5** -
+Edited `Dockerfile` for **Project 5** 
 ```
 FROM node:18-bullseye
 
 RUN apt update
 RUN npm install -g -y @angular/cli
 
-WORKDIR /wsu-hw-ng-main
 
 RUN mkdir /bird
 WORKDIR /bird
 
-COPY package.json /bird/
+RUN mkdir src
+
+COPY wsu-hw-ng-main/package.json /bird/
 
 RUN npm install
 
-COPY angular.json /bird/
-COPY.json /bird/
-COPY *.js /bird/
-COPY README.md /bird/
-COPY ./src /bird/src/
+COPY wsu-hw-ng-main/angular.json /bird/
+COPY wsu-hw-ng-main/*.json /bird/
+COPY *wsu-hw-ng-main/*.js /bird/
+COPY wsu-hw-ng-main/README.md /bird/
+COPY wsu-hw-ng-main/src/ /bird/src/
 
 EXPOSE 4200
 
 CMD ["ng", "serve", "-o", "--host", "0.0.0.0"]
 ```
-- While using `ADD` in **Project 4** was cool and did technically work in order to build our own image off the current angular site design, `COPY` was implanted.
-
-## GitHub Repository Contents
-
-- [x] `README-CD.md` (and `README-CI.md` from P4)
-- [x] `angular-site` folder with application
-- [x] `Dockerfile`
-- [x] GitHub action `yml` file in `.github/workflows`
-- `deployment` folder with:
-    - [ ] `bash` script
-    - [ ] `webhook` / `hook` definition file
-    - [ ] `webhook` service file
+> [!NOTE]
+> While using `ADD` in **Project 4** was cool and did technically work in order to build our own image off the current angular site design, `COPY` will be implanted in this project.
 
 ## Part 1 - Semantic Versioning
 
@@ -69,7 +60,7 @@ or
 
 To create a new tag on an old commit (Find at the bottom of your commit within GitHub history) use the `git tag -a v*.*.* <commit-num>` command. Below is an example:
 ```
-git tag -a v0.1.0 1caa2b1
+git tag -a v0.1.0 1caa2b1 -m "write commit message here"
 ```
   - Tags commit number `1caa2b1` with `v0.1.0`
 
@@ -88,35 +79,85 @@ git push origin --tags
 
 ### CI with GitHub Actions
 
-Below is my edited `docker-image.yml`
+Below is my `CD.yml`file which was made by editing my `docker-image.yml`
 
 ```
-NEED TO EDIT
+name: docker-image-cd
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - 'v*.*.*'
+  pull_request:
+    branches:
+      - 'main'
+  workflow_dispatch:
+  
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - 
+       name: Checkout
+       uses: actions/checkout@v4
+
+      - 
+       name: Docker meta
+       id: meta
+       uses: docker/metadata-action@v5
+       with:
+         images: saucydorito/gossett-ceg3120
+         tags: |
+           type=semver,pattern={{major}}
+           type=semver,pattern={{major}}.{{minor}}
+           type=semver,pattern={{version}}
+
+      - 
+       name: Login to DockerHub
+       uses: docker/login-action@v3
+       with:
+         username: ${{ secrets.DOCKERHUB_USERNAME }}
+         password: ${{ secrets.DOCKERHUB_TOKEN }}  
+        
+      - 
+       name: Build and push
+       uses: docker/build-push-action@v6
+       with:
+         context: ./project5/angular-site
+         file: ./project5/angular-site/Dockerfile
+         push: ${{ github.event_name != 'pull_request' }}
+         tags: ${{ steps.meta.outputs.tags }}
+         labels: ${{ steps.meta.outputs.labels }}
+      
 ```
 
 #### *Summary of What Workflow Does and When*
 
-When the `.yml` workflow commit is pushed to the `[main]` branch it follows these steps:
+When a new git tag is pushed to the `main` branch the `.yml` follows these steps:
 
 ***Triggering the Workflow:***
-   ```
-    name: docker-image-ci
-    
-    on:
-      push:
-        branches: [main]
-      workflow-dispatch:
-   ```
-- `name` - Names your action
-- `branches: [main]` - Runs the workflow as soon as changes are pushed to the main branch
-- `workflow-dispatch:` - Allows you to manually trigger pipelines and enter unique inputs for each run
+```
+name: docker-image-cd # Names your action
+
+on:                   # Tells the action to start and
+  push:               # push
+    branches:         # to branch main
+      - 'main'        # 
+    tags:             # when a git tag 
+      - 'v*.*.*'      # with this format is pushed to github
+  workflow_dispatch:  # Allows you to manually start action
+```
 
 ***Job Setup:***
-   ```
-    jobs:
-      build-and-push:
-        runs-on: ubuntu-latest
-   ```
+```
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+```
 - The job `build-and-push` makes it so the `.yml` will run on the latest version of ubuntu within a virtual machine
 
 ***Steps:***
@@ -124,66 +165,103 @@ When the `.yml` workflow commit is pushed to the `[main]` branch it follows thes
 *Checkout step:*
 ```
 -
-name: Checkout
-uses: actions/checkout@v4
+ name: Checkout
+ uses: actions/checkout@v4
 ```
 - This step uses the `checkout action` to clone the repository code into the workflow's runner
+
+*Docker Metadata:*
+```
+- 
+ name: Docker meta
+ id: meta
+ uses: docker/metadata-action@v5
+ with:
+   images: saucydorito/gossett-ceg3120
+   tags: |
+     type=semver,pattern={{major}}
+     type=semver,pattern={{major}}.{{minor}}
+     type=semver,pattern={{version}}
+```
+- This step uses `docker/metadata-action@v5` to label the image within the `saucydorito/gossett-ceg3120` Dockerhub repo with the given tag parameters/`type`s. 
+
+Ex: If you were to push the tag `v5.0.0` this is what the `.yml` sees.
+```
+type=semver,pattern={{5}}
+type=semver,pattern={{5}}.{{0}}
+type=semver,pattern={{5.0.0}}
+```
 
 *DockerHub Login:*
    ```
    -
-   name: Log in to DockerHub
-   uses: docker/login-action@v3
-   with:
-     username: ${{ secrets.DOCKERHUB_USERNAME }}
-     password: ${{ secrets.DOCKERHUB_TOKEN }}
+    name: Log in to DockerHub
+    uses: docker/login-action@v3
+    with:
+      username: ${{ secrets.DOCKERHUB_USERNAME }}
+      password: ${{ secrets.DOCKERHUB_TOKEN }}
    ```
-- This step logs into DockerHub using the provided secrets you created above
+- This step logs into DockerHub using the repository secrets created in **Project 4**
 
 *Build and Push Docker Image:*
   ```
-  -
-  name: Build Docker image
-  uses: docker/build-push-action@v6
-  with:
-    context: ./project4/angular-site
-    file: ./project4/angular-site/Dockerfile
-    push: true
-    tags: saucydorito/gossett-ceg3120-angular-site:latest
+  - 
+   name: Build and push
+   uses: docker/build-push-action@v6
+   with:
+     context: ./project5/angular-site
+     file: ./project5/angular-site/Dockerfile
+     push: ${{ github.event_name != 'pull_request' }}
+     tags: ${{ steps.meta.outputs.tags }}
+     labels: ${{ steps.meta.outputs.labels }}
   ```
-- This step builds the Docker image with the build context specified within the Dockerfile we created in `Part 1 - Docker-ize it` from **Project 4**, Adds the appropriate tag, then pushes it to DockerHub.
+- This step builds the Docker image with the build context specified within the Dockerfile created in `Part 1 - Docker-ize it` from **Project 4**, Adds the appropriate tag, then pushes it to DockerHub.
     - `context` - The directory where the Dockerfile is located
     - `file` - Path to the Dockerfile
-    - `push` - Setting this to `true` causes the image to be pushed to DockerHub after it's successfully built
-    - `tags` - Lists the `user` and the directory you want to push your completed image to
+    - `push: ${{ github.event_name != 'pull_request' }}` means only `push` if this wasn't a *pull request*.
+    - `tags: ${{ steps.meta.outputs.tags }}` applies the tags created from the metadata step (e.g. 1, 1.2, 1.2.3, latest). 
+    - `labels: ${{ steps.meta.outputs.labels }}` applies the labels created during the metadata step to the image.
 
 #### *What Needs to be Updated if using Workflow in a Different Repository*
 
-If you were going to recreate this workflow in another repository, you will need to update the following:
+> [!IMPORTANT]
+>If you were going to recreate this workflow in another repository, you will need to update the following:
 
-1. **Build Context and Dockerfile Path:**
-    - Update the context and file values if your Dockerfile is in a different location.
+**Build Context and Dockerfile Path:**
+  - Update the context and file values if your Dockerfile is in a different location.
 ```
 context: ./your/new/path
 file: ./your/new/path/Dockerfile
 ```
-2. **Image Tags:**
-    - Replace `saucydorito/gossett-ceg3120-angular-site:latest` with your DockerHub repository name and desired tag.
+**Image Tags:**
+  - Replace `saucydorito/gossett-ceg3120` with your DockerHub username and repository name.
 ```
-tags: yourdockerhubusername/your-repo:latest
+tags: your-dockerhub-user-name/your-repo
 ```
-3. **Repository Secrets:**
-    - Ensure the secrets `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` are set in your repository and if your using different secret names make sure to update the workflow accordingly.
+
+> [!NOTE]
+> You don't have to, but you can also edit the `tag` patterns so your `.yml` pushes different tags from above. Such as only having `type=semver,pattern={{version}}` so it only pushes the full version and `latest` to Dockerhub.
+
+**Repository Secrets:**
+
+> [!IMPORTANT]
+> Ensure the secrets `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` are set in your repository secretes and if your using different secret names make sure to update the workflow accordingly.
 
 #### *Link to Workflow File in my GitHub Repository*
 
-- [Link to my Workflow File in GitHub](https://github.com/WSU-kduncan/ceg3120-cicd-Saucy-tgossett/blob/main/.github/workflows/docker-image.yml)
+- [Link to my Workflow File in GitHub](https://github.com/WSU-kduncan/ceg3120-cicd-Saucy-tgossett/blob/main/.github/workflows/CD.yml)
 
 ### Testing & Validating
 
 #### *How to Test that your Workflow did its Tasking*
 
-##### Monitor the Run:
+##### Look at your Actions tab
+
+> [!IMPORTANT]  
+> Do the steps below **AFTER** pushing your `tag` (`v*.*.*`) to GitHub.
+
+> [!NOTE]  
+> Please note that you still have to commit and push you `.yml` first. It will **not** work until you push the `tag`.
 
 1. Navigate to the Actions tab in your repository.
 2. Check that the job steps complete without errors.
@@ -195,16 +273,23 @@ tags: yourdockerhubusername/your-repo:latest
 ##### Check DockerHub Repository:
 
 1. Log in to your DockerHub account
-2. Verify that the image `DOCKER_USERNAME/REPO_NAME:TAG` appears in the desired repository
+2. Verify that the image within your Dockerhub repository is labeled with the correct `tag`s
 
 ##### Run the Docker Container Locally:
 
-1. Pull the image:
-    - `docker pull DOCKER_USERBNAME/REPO_NAME:TAG`
+1. Pull the Image:
+   ```
+   docker pull DOCKERHUB_USERNAME/REPO_NAME:tag
+   ```
+   OR
+   ```
+   docker pull DOCKERHUB_USERNAME/REPO_NAME:latest
+   ```
 2. Run the container:
-    - `docker run --rm DOCKER_USERBNAME/REPO_NAME:TAG`
-        - Confirm that the container starts up and the application or service in the container behaves as expected
-        - Using the `--rm` flag will remove the container once you exit so everything stays clean. Remove tag if you want container to keep running once it has been closed.
+    - `docker run --rm  -p 4200:4200 DOCKERHUB_USERNAME/REPO_NAME:tag`
+        - Confirm that the container starts up and the application runs on port `4200`. To do this just got to http://localhost:4200 within your browser.
+> [!TIP]
+> Using the `--rm` flag will remove the container once you exit so everything stays clean. Remove tag if you want container to keep running once it has been closed.
 
 ## Part 2 - Deployment
 
@@ -324,4 +409,5 @@ tags: yourdockerhubusername/your-repo:latest
 ***Helpful Resources:***
 - [How to Tag Old Commits](https://betterstack.com/community/questions/how-to-tag-older-commit-in-git/)
 - [How to delete Tags](https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-delete-tag.html#:~:text=To%20delete%20the%20Git%20tag,tag%20you%20want%20to%20delete.)
+- [Different Markdown Highlighted blocks](https://github.com/orgs/community/discussions/16925)
 
