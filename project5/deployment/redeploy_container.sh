@@ -1,3 +1,4 @@
+#!/bin/bash
 
 IMAGE="saucydorito/gossett-ceg3120:latest"
 CONTAINER_NAME="angular"
