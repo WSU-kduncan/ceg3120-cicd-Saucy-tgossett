@@ -1,29 +1,33 @@
-#!/bin/sh
-
 [
   {
-    "id": "deploy",
-    "execute-command": "/home/ubuntu/ceg3120-cicd-tylargossett/deployment/redeploy_container.sh",
-    "command-working-directory": "/home/ubuntu/ceg3120-cicd-tylargossett/angular-site",
-    "trigger-rule": {
-      "and": [
-        {
-          "match": {
-        "type": "value",
-        "value": "run",
-        "parameter": {
-          "source": "payload",
-          "name": "action"
-        }
-      }
-        },
-        {
-          "match": {
-            "type": "payload-hmac-sha1",
-            "secret": "supercalifragilisticexpialidocious",
-            "parameter": {
-              "source": "header",
-              "name": "X-Hub-Signature"
+    "id": "deploy-angular",
+    "execute-command": "/home/ubuntu/deployment/redeploy_container.sh",
+    "command-working-directory": "/home/ubuntu",
+    "trigger-rule":
+    {
+     "and":
+     [
+       {
+         "match":
+         {
+           "type": "value",
+           "value": "run",
+           "parameter":
+           {
+             "source": "payload",
+             "name": "action"
+           }
+         }
+       },
+       {
+         "match":
+         {
+           "type": "payload-hmac-sha1",
+           "secret": "supercalifragilisticexpialidocious",
+           "parameter":
+            {
+             "source": "header",
+             "name": "X-Hub-Signature"
             }
           }
         }
@@ -31,4 +35,3 @@
     }
   }
 ]
-
