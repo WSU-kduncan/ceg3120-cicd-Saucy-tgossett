@@ -1,8 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 IMAGE="saucydorito/gossett-ceg3120:latest"
-CONTAINER_NAME="angular-site"
+CONTAINER="angular-site"
 
-docker pull $IMAGE
-docker stop $CONTAINER_NAME && docker rm $CONTAINER_NAME
-docker run -it -d -p 4200:4200 --name $CONTAINER_NAME $IMAGE 
+# 1) Pull latest image
+docker pull "$IMAGE"
+
+# 2) Stop & remove old container (ignore errors)
+docker stop "$CONTAINER" || true
+docker rm   "$CONTAINER" || true
+
+# 3) Start new container
+docker run -d \
+  --name "$CONTAINER" \
+  -p 4200:4200 \
+  "$IMAGE"
