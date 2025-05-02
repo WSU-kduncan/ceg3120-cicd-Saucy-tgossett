@@ -1,8 +1,8 @@
 [
   {
     "id": "deploy-angular",
-    "execute-command": "/home/ubuntu/deployment/redeploy_container.sh",
-    "command-working-directory": "/home/ubuntu",
+    "execute-command": "/home/ubuntu/saucydorito/gossett-ceg3120/deployment/redeploy_container.sh",
+    "command-working-directory": "/home/ubuntu/saucydorito/gossett-ceg3120/angular-site",
     "trigger-rule":
     {
      "and":
