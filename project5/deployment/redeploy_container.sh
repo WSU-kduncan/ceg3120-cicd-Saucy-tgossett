@@ -11,7 +11,4 @@ docker stop "$CONTAINER" || true
 docker rm   "$CONTAINER" || true
 
 # 3) Start new container
-docker run -d \
-  --name "$CONTAINER" \
-  -p 4200:4200 \
-  "$IMAGE"
+docker run -d -p 4200:4200 --name "$CONTAINER" "$IMAGE" 
